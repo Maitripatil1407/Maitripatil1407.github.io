@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sustainable Development Goals</title>
+    <title>Algorithm Concepts</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 20px;
         }
-        h1, h2, h3 {
+        h1 {
             color: #333;
         }
-        h3 {
-            margin-top: 10px;
+        h2, h3 {
+            color: #555;
         }
         p, ul {
             margin: 0 0 10px;
@@ -26,55 +26,170 @@
     </style>
 </head>
 <body>
-    <h1>Sustainable Development Goals</h1>
+    <h1>Algorithm Concepts</h1>
     
-    <h2>1. Solar Power Irrigation Scheduling</h2>
-    <h3>SDG 6: Clean Water and Sanitation</h3>
-    <p><strong>Target 6.3:</strong> By 2030, improve water quality by reducing pollution, eliminating dumping and minimizing the release of hazardous chemicals and materials, halving the proportion of untreated wastewater and substantially increasing recycling and safe reuse globally.</p>
+    <h2>1. Types of Problems in Nature</h2>
+    <p><strong>Iteration:</strong> Repetition of a process in a loop-like manner.</p>
+    <p>Example: Seasonal changes (spring, summer, autumn, winter) follow a cyclic iterative pattern.</p>
+    <p><strong>Recursion:</strong> A process calling itself, often with a smaller problem size.</p>
+    <p>Example: Tree branching follows a recursive pattern.</p>
+    <p><strong>Backtracking:</strong> Exploring potential paths to achieve a goal, backing up when necessary.</p>
+
+    <h2>2. Space and Time Efficiency</h2>
+    <p><strong>Time Efficiency:</strong> Measures how long an algorithm takes as input size grows. Faster algorithms handle larger inputs in less time.</p>
+    <p><strong>Space Efficiency:</strong> Measures memory usage of an algorithm. Less memory usage means faster access and better performance.</p>
+    
+    <h3>Classes of Problems</h3>
     <ul>
-        <li><strong>Indicator 6.3.2:</strong> Proportion of bodies of water with good ambient water quality.</li>
-        <li><strong>Indicator 6.3.1:</strong> Proportion of wastewater safely treated.</li>
+        <li>Constant: O(1)</li>
+        <li>Logarithmic: O(log(n))</li>
+        <li>Linear: O(n)</li>
+        <li>Quadratic: O(n²)</li>
+        <li>Cubic: O(n³)</li>
+        <li>Exponential: O(2ⁿ)</li>
+        <li>Factorial: O(n!)</li>
+    </ul>
+    
+    <h3>Orders of Growth</h3>
+    <ul>
+        <li><strong>Best Case:</strong> The fastest scenario (e.g., finding the first item in a search).</li>
+        <li><strong>Average Case:</strong> A realistic view of performance.</li>
+        <li><strong>Worst Case:</strong> The slowest or most resource-intensive scenario.</li>
     </ul>
 
-    <h3>SDG 7: Affordable and Clean Energy</h3>
-    <p><strong>Target 7.2:</strong> By 2030, increase substantially the share of renewable energy in the global energy mix.</p>
+    <h2>3. Design Principles from Chapter 2</h2>
     <ul>
-        <li><strong>Indicator 7.2.1:</strong> Renewable energy share in the total final energy consumption.</li>
-        <li><strong>Indicator 7.2.2:</strong> Renewable energy share in the total electricity generation.</li>
+        <li><strong>Bubble Sort:</strong> O(n²) - Repeatedly compare and swap adjacent items.</li>
+        <li><strong>Selection Sort:</strong> O(n²) - Find and move the smallest item repeatedly.</li>
+        <li><strong>Merge Sort:</strong> O(n log n) - Divide, sort, and merge.</li>
+        <li><strong>Quick Sort:</strong> O(n log n) - Partition around a pivot and sort recursively.</li>
+        <li><strong>Insertion Sort:</strong> O(n²) (worst case) - Insert elements one at a time into the correct position.</li>
+        <li><strong>Heap Sort:</strong> O(n log n) - Uses a binary heap structure.</li>
+        <li><strong>Boyer-Moore:</strong> Efficient string-searching algorithm.</li>
+        <li><strong>Kruskal's Algorithm:</strong> Finds the minimum spanning tree.</li>
+        <li><strong>Floyd-Warshall Algorithm:</strong> O(n³) - Finds shortest paths between all pairs of nodes.</li>
+        <li><strong>Prim's Algorithm:</strong> Builds a minimum spanning tree by selecting smallest edges.</li>
     </ul>
 
-    <h3>SDG 13: Climate Action</h3>
-    <p><strong>Target 13.1:</strong> Strengthen resilience and adaptive capacity to climate-related hazards and natural disasters in all countries.</p>
+    <h2>4. Hierarchical Data and Tree Structures</h2>
+    <p>Hierarchical data is organized like a tree with parent-child relationships.</p>
     <ul>
-        <li><strong>Indicator 13.1.1:</strong> Number of deaths, missing persons, and directly affected persons attributed to disasters per 100,000 population.</li>
+        <li><strong>Tree:</strong> A hierarchical structure with nodes and edges.</li>
+        <li><strong>Binary Search Tree (BST):</strong> Created by taking the first incoming element as the root node, with all items lesser than the root moved to the left and greater than or equal to the right side of the tree. O(log n) (average), O(n) (worst case) - Efficient but slows if unbalanced.</li>
+        <li><strong>AVL Tree:</strong> O(log n) - Self-balancing BST. In an AVL tree, the heights of the two child sub-trees of any node differ by 0 or 1.</li>
+        <li><strong>2-3 Tree:</strong> O(log n) - A 2-3 Tree has either a 2-node (2 children with 1 data key present) or a 3-node (3 children with 2 data keys present).</li>
+        <li><strong>Red-Black Tree:</strong> O(log n) - Balances using color rules.</li>
+        <li><strong>Heap:</strong> Efficient for priority tasks (e.g., min/max operations).</li>
+        <li><strong>Trie:</strong> Fast for prefix searches and autocomplete.</li>
     </ul>
 
-    <h3>Focus:</h3>
+    <h2>5. Array Query Algorithms</h2>
+    <p>Essential for efficiently processing and retrieving information from arrays.</p>
     <ul>
-        <li>Enhance the efficiency and sustainability of water use in agriculture.</li>
-        <li>Increase the utilization of renewable energy sources in agricultural practices.</li>
-        <li>Improve resilience to climate-related hazards through sustainable agricultural practices.</li>
+        <li><strong>Need:</strong> Faster operations for large datasets.</li>
+        <li><strong>Principle:</strong> Preprocess data to enable fast queries and updates.</li>
+        <li><strong>Applications:</strong> Range sums, min/max calculations, and data updates.</li>
     </ul>
+    
+    <h2>6. Trees vs. Graphs and Their Traversals</h2>
+    <p><strong>Trees:</strong> Hierarchical, acyclic, single root, one path between nodes.</p>
+    <p><strong>Graphs:</strong> General structures, cyclic or acyclic, multiple paths.</p>
+    <h3>Traversals:</h3>
+    <ul>
+        <li><strong>Tree Traversals:</strong>
+            <ul>
+                <li>Inorder: (Left, Root, Right)</li>
+                <li>Preorder: (Root, Left, Right)</li>
+                <li>Postorder: (Left, Right, Root)</li>
+            </ul>
+        </li>
+        <li><strong>Graph Traversals:</strong>
+            <ul>
+                <li>Depth-First Search (DFS)</li>
+                <li>Breadth-First Search (BFS)</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h2>7. Determining the Most Efficient Approach to Solve a Complex Problem</h2>
+    <ul>
+        <li><strong>Understand the Problem:</strong> Clearly define the inputs, outputs, constraints, and objectives.</li>
+        <li><strong>Analyze Complexity:</strong> Consider the problem size and required performance (time and space complexities).</li>
+        <li><strong>Break Down the Problem:</strong> Divide it into manageable parts and identify any subproblems or overlapping substructures.</li>
+        <li><strong>Choose the Right Algorithmic Paradigm:</strong> Use Divide and Conquer, Dynamic Programming, Greedy, or Backtracking based on the problem nature.</li>
+        <li><strong>Test and Optimize:</strong> Implement a solution, analyze its performance, and refine it if needed.</li>
+    </ul>
+    
+    <h2>8. Balancing Multiple Conflicting Constraints in Design</h2>
+    <p>In situations involving conflicting constraints (e.g., optimizing performance while minimizing memory usage):</p>
+    <ul>
+        <li><strong>Identify and Prioritize Constraints:</strong> Determine which constraints are more critical.</li>
+        <li><strong>Use Trade-Off Analysis:</strong> Evaluate how relaxing one constraint affects others.</li>
+        <li><strong>Iterative Refinement:</strong> Implement an initial solution and iteratively improve it based on feedback or testing.</li>
+        <li><strong>Example:</strong> Designing a mobile app feature where low memory usage was critical but performance couldn't be compromised. I chose algorithms optimized for space and used caching for frequently accessed data to balance the constraints.</li>
+    </ul>
+    
+    <h2>9. Sorting and Searching Algorithms</h2>
+    <h3>Sorting Algorithms:</h3>
+    <ul>
+        <li><strong>Bubble Sort:</strong> Compare and swap adjacent elements.</li>
+        <li><strong>Merge Sort:</strong> Divide, sort, and merge.</li>
+        <li><strong>Quick Sort:</strong> Efficient for large datasets, uses partitioning.</li>
+        <li><strong>Insertion Sort:</strong> Good for small or nearly sorted data.</li>
+    </ul>
+    <h3>Searching Algorithms:</h3>
+    <ul>
+        <li><strong>Linear Search:</strong> Check each element in sequence.</li>
+        <li><strong>Binary Search:</strong> Divide and conquer in sorted data.</li>
+       [_{{{CITATION{{{_1{](https://github.com/buribalazs/smooth-drag-order/tree/7b40d21d076c3e31765f61481f537beaf4c5ec9f/README.md)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Algorithms and Design Techniques</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        h2, h3 {
+            color: #555;
+        }
+        p, ul {
+            margin: 0 0 10px;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Graph Algorithms and Design Techniques</h1>
+    
+    <h2>10. Importance of Graph Algorithms</h2>
+    <h3>Spanning Trees</h3>
+    <p>Minimize connectivity costs in networks.</p>
 
-    <h2>2. Energy Generation Tracking</h2>
-    <h3>SDG 7: Affordable and Clean Energy</h3>
-    <p><strong>Target 7.1:</strong> By 2030, ensure universal access to affordable, reliable, and modern energy services.</p>
-    <ul>
-        <li><strong>Indicator 7.1.1:</strong> Proportion of population with access to electricity.</li>
-        <li><strong>Indicator 7.1.2:</strong> Proportion of population with primary reliance on clean fuels and technology.</li>
-    </ul>
+    <h3>Shortest Paths</h3>
+    <p>Optimize routes for navigation and communication.</p>
+    
+    <h3>Applications</h3>
+    <p>GPS systems, network design, and data packet routing.</p>
 
-    <h3>SDG 13: Climate Action</h3>
-    <p><strong>Target 13.2:</strong> Integrate climate change measures into national policies, strategies, and planning.</p>
-    <ul>
-        <li><strong>Indicator 13.2.1:</strong> Number of countries with nationally determined contributions, long-term strategies, national adaptation plans, strategies as reported in adaptation communications and national communications.</li>
-    </ul>
+    <h2>11. Studied Algorithm Design Techniques</h2>
+    <h3>Backtracking</h3>
+    <p>Backtracking is like trying to solve a puzzle by making a series of guesses, and if a guess turns out to be wrong, you backtrack and try a different guess. Examples include the N-Queens Problem.</p>
 
-    <h3>Focus:</h3>
-    <ul>
-        <li>Monitor and enhance the efficiency of energy generation from renewable sources.</li>
-        <li>Ensure the reliability and affordability of energy services.</li>
-        <li>Foster integration of renewable energy into national strategies to combat climate change.</li>
-    </ul>
+    <h3>Kruskal's Algorithm</h3>
+    <p>Kruskal's Algorithm adds edges in increasing order of weight, avoiding cycles, until all vertices are connected.</p>
+
+    <h3>Dijkstra's Algorithm</h3>
+    <p>Dijkstra's Algorithm finds the shortest path from a source vertex to all other vertices in a graph with non-negative weights.</p>
 </body>
 </html>
