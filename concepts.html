@@ -59,18 +59,6 @@
             overflow-x: auto;
         }
 
-        .visual {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .visual img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
         footer {
             text-align: center;
             padding: 20px;
@@ -108,9 +96,6 @@
 
 # Accessing data
 print(hash_table["Farm1"]["CropType"])  # Output: Wheat</code></pre>
-        <div class="visual">
-            <img src="hash_table_example.png" alt="Hash Table Visualization">
-        </div>
     </div>
 
     <div class="concept">
@@ -125,9 +110,6 @@ irrigation_queue = deque(["Field1", "Field2", "Field3"])
 while irrigation_queue:
     field = irrigation_queue.popleft()
     print(f"Irrigating {field}")</code></pre>
-        <div class="visual">
-            <img src="queue_example.png" alt="Queue Visualization">
-        </div>
     </div>
 
     <div class="concept">
@@ -143,9 +125,6 @@ while irrigation_queue:
 # Display connections
 for node, neighbors in graph.items():
     print(f"{node} connects to {', '.join(neighbors)}")</code></pre>
-        <div class="visual">
-            <img src="graph_example.png" alt="Graph Visualization">
-        </div>
     </div>
 
     <div class="concept">
@@ -170,9 +149,6 @@ def prims_algorithm(graph, start):
                     heapq.heappush(edges, (weight, neighbor, current))
 
     return mst</code></pre>
-        <div class="visual">
-            <img src="mst_example.png" alt="Minimum Spanning Tree Visualization">
-        </div>
     </div>
 
     <div class="concept">
@@ -186,9 +162,6 @@ def track_energy(data):
         print(f"Day {day}: {energy} kWh")
 
 track_energy(energy_data)</code></pre>
-        <div class="visual">
-            <img src="array_example.png" alt="Array Visualization">
-        </div>
     </div>
 
 </div>
@@ -199,3 +172,4 @@ track_energy(energy_data)</code></pre>
 
 </body>
 </html>
+
