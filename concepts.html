@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team 10 - Smart City Project Concepts</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(90deg, #1e88e5, #64b5f6);
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .concept {
+            margin-bottom: 40px;
+        }
+
+        .concept h2 {
+            color: #1e88e5;
+            margin-bottom: 10px;
+        }
+
+        .concept p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .concept pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-left: 5px solid #1e88e5;
+            overflow-x: auto;
+        }
+
+        .visual {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .visual img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(90deg, #1e88e5, #64b5f6);
+            color: white;
+            border-top: 3px solid #1565c0;
+        }
+
+        footer a {
+            color: #bbdefb;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Smart City Project Concepts</h1>
+</header>
+
+<div class="container">
+
+    <div class="concept">
+        <h2>1. Hash Tables</h2>
+        <p><strong>Description:</strong> Hash tables are used for efficient storage and retrieval of farm data like soil quality, crop type, and yield history.</p>
+        <p><strong>Example:</strong> Mapping farm IDs to their respective data.</p>
+        <pre><code>hash_table = {
+    "Farm1": {"SoilQuality": "High", "CropType": "Wheat"},
+    "Farm2": {"SoilQuality": "Medium", "CropType": "Rice"}
+}
+
+# Accessing data
+print(hash_table["Farm1"]["CropType"])  # Output: Wheat</code></pre>
+        <div class="visual">
+            <img src="hash_table_example.png" alt="Hash Table Visualization">
+        </div>
+    </div>
+
+    <div class="concept">
+        <h2>2. Queues</h2>
+        <p><strong>Description:</strong> Queues are used in solar-powered irrigation scheduling to prioritize water distribution tasks.</p>
+        <p><strong>Example:</strong> Scheduling irrigation tasks based on crop water requirements.</p>
+        <pre><code>from collections import deque
+
+irrigation_queue = deque(["Field1", "Field2", "Field3"])
+
+# Process irrigation tasks
+while irrigation_queue:
+    field = irrigation_queue.popleft()
+    print(f"Irrigating {field}")</code></pre>
+        <div class="visual">
+            <img src="queue_example.png" alt="Queue Visualization">
+        </div>
+    </div>
+
+    <div class="concept">
+        <h2>3. Graphs and Linked Lists</h2>
+        <p><strong>Description:</strong> Graphs and linked lists are used in supply chain tracking to represent and manage farm-to-market routes.</p>
+        <p><strong>Example:</strong> A graph representing transportation routes.</p>
+        <pre><code>graph = {
+    "Farm": ["Market1", "Market2"],
+    "Market1": ["Warehouse1"],
+    "Market2": ["Warehouse2"]
+}
+
+# Display connections
+for node, neighbors in graph.items():
+    print(f"{node} connects to {', '.join(neighbors)}")</code></pre>
+        <div class="visual">
+            <img src="graph_example.png" alt="Graph Visualization">
+        </div>
+    </div>
+
+    <div class="concept">
+        <h2>4. Minimum Spanning Tree (MST), DFS, and BFS</h2>
+        <p><strong>Description:</strong> Used to optimize microgrid layout for rural farms.</p>
+        <p><strong>Example:</strong> Applying Prim's algorithm for MST calculation.</p>
+        <pre><code>import heapq
+
+def prims_algorithm(graph, start):
+    mst = []
+    visited = set()
+    edges = [(0, start, None)]
+
+    while edges:
+        cost, current, prev = heapq.heappop(edges)
+        if current not in visited:
+            visited.add(current)
+            mst.append((prev, current, cost))
+
+            for neighbor, weight in graph[current]:
+                if neighbor not in visited:
+                    heapq.heappush(edges, (weight, neighbor, current))
+
+    return mst</code></pre>
+        <div class="visual">
+            <img src="mst_example.png" alt="Minimum Spanning Tree Visualization">
+        </div>
+    </div>
+
+    <div class="concept">
+        <h2>5. Arrays and Stacks</h2>
+        <p><strong>Description:</strong> Arrays and stacks are used in energy generation tracking and farmer marketplace data handling.</p>
+        <p><strong>Example:</strong> Tracking energy generation.</p>
+        <pre><code>energy_data = [100, 200, 150, 300]  # Energy generated per day
+
+def track_energy(data):
+    for day, energy in enumerate(data, start=1):
+        print(f"Day {day}: {energy} kWh")
+
+track_energy(energy_data)</code></pre>
+        <div class="visual">
+            <img src="array_example.png" alt="Array Visualization">
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; 2024 Team Aranyagiri. All rights reserved. <a href="#">Privacy Policy</a></p>
+</footer>
+
+</body>
+</html>
