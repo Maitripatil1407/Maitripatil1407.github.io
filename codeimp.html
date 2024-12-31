@@ -1,207 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Cases - Solar Powered Irrigation Scheduling & Energy Generation Tracking</title>
+    <title>Business Cases: Solar Powered Irrigation Scheduling & Energy Generation Tracking</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+        }
+        header {
+            background: #0078d7;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        section {
+            padding: 2rem;
+        }
+        h1, h2, h3 {
             color: #333;
         }
-
-        h1,
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-        }
-
-        .content {
-            margin: 20px;
-        }
-
         pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 10px;
-            border-radius: 5px;
+            background: #f4f4f4;
+            padding: 1rem;
             overflow-x: auto;
-        }
-
-        .example-output {
-            background-color: #ecf0f1;
-            padding: 10px;
-            border-left: 5px solid #3498db;
-            margin-bottom: 20px;
-        }
-
-        .summary {
-            background-color: #ecf0f1;
-            padding: 15px;
-            border-left: 5px solid #3498db;
-            margin-top: 20px;
         }
     </style>
 </head>
-
 <body>
-    <div class="content">
-        <h1>Business Cases - Solar Powered Irrigation Scheduling & Energy Generation Tracking</h1>
-
-        <section>
-            <h2>1. Solar Powered Irrigation Scheduling: Using Structures and Priority Queues</h2>
-            <p><strong>Description:</strong> Solar-powered irrigation scheduling aims to optimize the use of solar energy in irrigation systems. This system ensures that water is only provided to crops when necessary, based on factors such as the solar energy availability, weather forecasts, and the crop's water requirements. The goal is to use solar energy efficiently and reduce water wastage.</p>
-
-            <h3>C++ Code Example:</h3>
-            <pre>
-#include &lt;iostream&gt;
+    <header>
+        <h1>Business Cases</h1>
+        <h2>1. Solar Powered Irrigation Scheduling</h2>
+    </header>
+    <section>
+        <h3>1. Queues</h3>
+        <p>Description: Queues are used to schedule irrigation tasks in a First-In-First-Out (FIFO) order. Tasks are added to the queue based on priority and processed one by one.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
 #include &lt;queue&gt;
-#include &lt;vector&gt;
 #include &lt;string&gt;
 
 using namespace std;
 
-// Structure to store irrigation details
-struct IrrigationTask {
-    string cropName;
-    int scheduledTime; // Time in hours when irrigation will occur
-    int energyRequired; // Energy required for irrigation (in kWh)
-
-    bool operator&lt;(const IrrigationTask&amp; other) const {
-        return scheduledTime &gt; other.scheduledTime; // Min-heap based on scheduledTime
-    }
-};
-
 int main() {
-    priority_queue&lt;IrrigationTask&gt; irrigationQueue;
+    queue&lt;string&gt; irrigationQueue;
 
-    // Adding irrigation tasks
-    irrigationQueue.push({"Wheat", 10, 5});
-    irrigationQueue.push({"Rice", 8, 3});
-    irrigationQueue.push({"Corn", 12, 4});
+    // Adding tasks to the irrigation queue
+    irrigationQueue.push("Irrigate Field A");
+    irrigationQueue.push("Irrigate Field B");
+    irrigationQueue.push("Irrigate Field C");
 
-    // Display the irrigation schedule
-    cout &lt;&lt; "Irrigation Schedule (Solar Powered):\n";
+    cout &lt;&lt; "Irrigation Queue Processing:\n";
     while (!irrigationQueue.empty()) {
-        IrrigationTask task = irrigationQueue.top();
-        irrigationQueue.pop();
-        cout &lt;&lt; "Crop: " &lt;&lt; task.cropName &lt;&lt; ", Time: " &lt;&lt; task.scheduledTime &lt;&lt; " hours, Energy Required: "
-             &lt;&lt; task.energyRequired &lt;&lt; " kWh\n";
+        cout &lt;&lt; irrigationQueue.front() &lt;&lt; endl; // Process the task at the front
+        irrigationQueue.pop();                  // Remove the processed task
     }
 
     return 0;
 }
-            </pre>
-            <div class="example-output">
-                <strong>Example Output:</strong>
-                <pre>
-Irrigation Schedule (Solar Powered):
-Crop: Rice, Time: 8 hours, Energy Required: 3 kWh
-Crop: Wheat, Time: 10 hours, Energy Required: 5 kWh
-Crop: Corn, Time: 12 hours, Energy Required: 4 kWh
-                </pre>
-            </div>
-        </section>
+        </code>
+        </pre>
 
-        <section>
-            <h2>2. Energy Generation Tracking: Using Linked List</h2>
-            <p><strong>Description:</strong> Energy generation tracking refers to monitoring the energy generated by different renewable sources, such as solar panels and wind turbines, over time. The system can help track energy production, identify trends, and make adjustments to optimize energy use. This program maintains a list of energy generation data and outputs the total energy generated by each source.</p>
+        <h3>2. Dynamic Programming</h3>
+        <p>Description: Dynamic Programming optimizes water usage by calculating the minimum water required to meet all crop needs. The goal is to ensure efficient resource allocation.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
 
-            <h3>C++ Code Example:</h3>
-            <pre>
-#include &lt;iostream&gt;
+using namespace std;
+
+int minWaterUsage(vector&lt;int&gt; &fields, int totalWater) {
+    vector&lt;int&gt; dp(totalWater + 1, INT_MAX);
+    dp[0] = 0;
+
+    for (int water : fields) {
+        for (int j = totalWater; j &gt;= water; --j) {
+            if (dp[j - water] != INT_MAX) {
+                dp[j] = min(dp[j], dp[j - water] + 1);
+            }
+        }
+    }
+
+    return dp[totalWater] == INT_MAX ? -1 : dp[totalWater];
+}
+
+int main() {
+    vector&lt;int&gt; fields = {3, 5, 7}; // Water required for each crop
+    int totalWater = 11;
+
+    int result = minWaterUsage(fields, totalWater);
+    if (result != -1) {
+        cout &lt;&lt; "Minimum number of fields irrigated: " &lt;&lt; result &lt;&lt; endl;
+    } else {
+        cout &lt;&lt; "Not enough water available.\n";
+    }
+
+    return 0;
+}
+        </code>
+        </pre>
+
+        <h3>3. BFS (Breadth-First Search)</h3>
+        <p>Description: BFS is used to traverse the irrigation pipeline graph to distribute water efficiently.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+void bfsIrrigation(unordered_map&lt;int, vector&lt;int&gt;&gt; &graph, int start) {
+    queue&lt;int&gt; q;
+    vector&lt;bool&gt; visited(graph.size(), false);
+
+    q.push(start);
+    visited[start] = true;
+
+    cout &lt;&lt; "Water Distribution Order:\n";
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        cout &lt;&lt; "Irrigating Field " &lt;&lt; node &lt;&lt; endl;
+
+        for (int neighbor : graph[node]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+    }
+}
+
+int main() {
+    unordered_map&lt;int, vector&lt;int&gt;&gt; graph = {
+        {1, {2, 3}},
+        {2, {4, 5}},
+        {3, {6}},
+        {4, {}},
+        {5, {}},
+        {6, {}}
+    };
+
+    bfsIrrigation(graph, 1); // Start from Field 1
+
+    return 0;
+}
+        </code>
+        </pre>
+
+        <h3>4. Dijkstra's Algorithm</h3>
+        <p>Description: Dijkstra's algorithm is used to find the shortest pipeline path to a specific area, ensuring efficient water delivery.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;climits&gt;
+
+using namespace std;
+
+void dijkstra(vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; &graph, int start, int n) {
+    vector&lt;int&gt; distance(n, INT_MAX);
+    priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, greater&lt;&gt;&gt; pq;
+
+    distance[start] = 0;
+    pq.push({0, start});
+
+    while (!pq.empty()) {
+        int dist = pq.top().first;
+        int node = pq.top().second;
+        pq.pop();
+
+        for (auto neighbor : graph[node]) {
+            int nextNode = neighbor.first;
+            int edgeWeight = neighbor.second;
+
+            if (distance[node] + edgeWeight < distance[nextNode]) {
+                distance[nextNode] = distance[node] + edgeWeight;
+                pq.push({distance[nextNode], nextNode});
+            }
+        }
+    }
+
+    cout &lt;&lt; "Shortest Path from Field " &lt;&lt; start &lt;&lt; ":\n";
+    for (int i = 0; i < n; ++i) {
+        cout &lt;&lt; "To Field " &lt;&lt; i &lt;&lt; ": " &lt;&lt; (distance[i] == INT_MAX ? -1 : distance[i]) &lt;&lt; endl;
+    }
+}
+
+int main() {
+    int n = 5; // Number of fields
+    vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; graph(n);
+
+    // Graph: {to, weight}
+    graph[0] = {{1, 2}, {2, 4}};
+    graph[1] = {{2, 1}, {3, 7}};
+    graph[2] = {{3, 3}};
+    graph[3] = {{4, 1}};
+    graph[4] = {};
+
+    dijkstra(graph, 0, n); // Start from Field 0
+
+    return 0;
+}
+        </code>
+        </pre>
+    </section>
+
+    <section>
+        <header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Case: Energy Generation Tracking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #0078d7;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        section {
+            padding: 2rem;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Business Case</h1>
+        <h2>Energy Generation Tracking</h2>
+    </header>
+    <section>
+        <h3>1. Arrays</h3>
+        <p>Description: Arrays are used to store daily energy generation data for different sources, allowing efficient iteration and tracking.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; energy = {250, 300, 200, 150};
+
+    cout &lt;&lt; "Daily Energy Generation:\n";
+    for (int i = 0; i < energy.size(); ++i) {
+        cout &lt;&lt; "Day " &lt;&lt; i + 1 &lt;&lt; ": " &lt;&lt; energy[i] &lt;&lt; " kWh\n";
+    }
+
+    return 0;
+}
+        </code>
+        </pre>
+
+        <h3>2. Stacks</h3>
+        <p>Description: Stacks are used to temporarily store energy generation data while processing, especially when reversing or undoing operations is required.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
+#include &lt;stack&gt;
+
+using namespace std;
+
+int main() {
+    stack&lt;int&gt; energyStack;
+
+    // Push daily energy generation data onto the stack
+    energyStack.push(250);
+    energyStack.push(300);
+    energyStack.push(200);
+    energyStack.push(150);
+
+    cout &lt;&lt; "Processing Energy Data (Reversed Order):\n";
+    while (!energyStack.empty()) {
+        cout &lt;&lt; "Energy: " &lt;&lt; energyStack.top() &lt;&lt; " kWh\n";
+        energyStack.pop(); // Remove processed data
+    }
+
+    return 0;
+}
+        </code>
+        </pre>
+
+        <h3>3. Queues</h3>
+        <p>Description: Queues are used to manage energy distribution tasks in a First-In-First-Out (FIFO) order, ensuring sequential processing.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
 #include &lt;string&gt;
 
 using namespace std;
 
-// Node structure to store energy generation details
-struct EnergyGeneration {
-    string sourceName;
-    double energyProduced; // Energy produced by the source (in kWh)
-    EnergyGeneration* next;
-
-    EnergyGeneration(string name, double energy) : sourceName(name), energyProduced(energy), next(nullptr) {}
-};
-
-class EnergyTracker {
-private:
-    EnergyGeneration* head;
-
-public:
-    EnergyTracker() : head(nullptr) {}
-
-    // Add a new energy generation record
-    void addGenerationRecord(const string&amp; source, double energy) {
-        EnergyGeneration* newRecord = new EnergyGeneration(source, energy);
-        newRecord-&gt;next = head;
-        head = newRecord;
-    }
-
-    // Display the energy generation records
-    void displayEnergyRecords() {
-        EnergyGeneration* current = head;
-        double totalEnergy = 0;
-
-        cout &lt;&lt; "Energy Generation Tracking:\n";
-        while (current != nullptr) {
-            cout &lt;&lt; "Source: " &lt;&lt; current-&gt;sourceName &lt;&lt; ", Energy Produced: " &lt;&lt; current-&gt;energyProduced &lt;&lt; " kWh\n";
-            totalEnergy += current-&gt;energyProduced;
-            current = current-&gt;next;
-        }
-
-        cout &lt;&lt; "Total Energy Generated: " &lt;&lt; totalEnergy &lt;&lt; " kWh\n";
-    }
-
-    // Destructor to free memory
-    ~EnergyTracker() {
-        while (head != nullptr) {
-            EnergyGeneration* temp = head;
-            head = head-&gt;next;
-            delete temp;
-        }
-    }
-};
-
 int main() {
-    EnergyTracker tracker;
+    queue&lt;string&gt; energyQueue;
 
-    // Adding energy generation data
-    tracker.addGenerationRecord("Solar Panel", 250.5);
-    tracker.addGenerationRecord("Wind Turbine", 180.2);
-    tracker.addGenerationRecord("Hydroelectric", 120.3);
+    // Adding energy distribution tasks
+    energyQueue.push("Distribute to Battery A");
+    energyQueue.push("Distribute to Battery B");
+    energyQueue.push("Distribute to Grid");
 
-    // Display energy generation records
-    tracker.displayEnergyRecords();
+    cout &lt;&lt; "Energy Distribution Queue:\n";
+    while (!energyQueue.empty()) {
+        cout &lt;&lt; energyQueue.front() &lt;&lt; endl;
+        energyQueue.pop(); // Process the task
+    }
 
     return 0;
 }
-            </pre>
-            <div class="example-output">
-                <strong>Example Output:</strong>
-                <pre>
-Energy Generation Tracking:
-Source: Hydroelectric, Energy Produced: 120.3 kWh
-Source: Wind Turbine, Energy Produced: 180.2 kWh
-Source: Solar Panel, Energy Produced: 250.5 kWh
-Total Energy Generated: 551 kWh
-                </pre>
-            </div>
-        </section>
+        </code>
+        </pre>
 
-        <section class="summary">
-            <h2>Summary of the C++ Code Examples:</h2>
-            <ul>
-                <li><strong>Solar Powered Irrigation Scheduling</strong> uses a priority queue to schedule irrigation tasks for crops based on solar energy availability and time.</li>
-                <li><strong>Energy Generation Tracking</strong> uses a linked list to store energy generation records and track the total energy produced by different renewable sources.</li>
-            </ul>
-            <p>These solutions are designed to optimize renewable energy use in agriculture and help farmers track energy generation for better planning and resource management.</p>
-        </section>
-    </div>
+        <h3>4. Graphs</h3>
+        <p>Description: Graphs represent connections between energy sources (e.g., solar panels, wind turbines) and storage units. Optimizes energy flow using graph traversal techniques.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+#include &lt;queue&gt;
+
+using namespace std;
+
+void bfsEnergyFlow(unordered_map&lt;string, vector&lt;string&gt;&gt; &graph, const string &start) {
+    queue&lt;string&gt; q;
+    unordered_map&lt;string, bool&gt; visited;
+
+    q.push(start);
+    visited[start] = true;
+
+    cout &lt;&lt; "Energy Flow Sequence:\n";
+    while (!q.empty()) {
+        string node = q.front();
+        q.pop();
+        cout &lt;&lt; "Source/Storage Unit: " &lt;&lt; node &lt;&lt; endl;
+
+        for (const string &neighbor : graph[node]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+    }
+}
+
+int main() {
+    unordered_map&lt;string, vector&lt;string&gt;&gt; graph = {
+        {"SolarPanel", {"Battery1", "Battery2"}},
+        {"Battery1", {"Grid"}},
+        {"Battery2", {"Grid"}},
+        {"Grid", {}}
+    };
+
+    bfsEnergyFlow(graph, "SolarPanel");
+
+    return 0;
+}
+        </code>
+        </pre>
+
+        <h3>5. Dynamic Programming</h3>
+        <p>Description: Dynamic Programming is used to optimize energy usage by determining the maximum energy storage achievable without exceeding storage capacity.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+int maxEnergyStorage(vector&lt;int&gt; &energy, int capacity) {
+    vector&lt;int&gt; dp(capacity + 1, 0);
+
+    for (int e : energy) {
+        for (int j = capacity; j &gt;= e; --j) {
+            dp[j] = max(dp[j], dp[j - e] + e);
+        }
+    }
+
+    return dp[capacity];
+}
+
+int main() {
+    vector&lt;int&gt; energy = {250, 300, 150, 200}; // Energy in kWh
+    int capacity = 500; // Storage capacity in kWh
+
+    int result = maxEnergyStorage(energy, capacity);
+    cout &lt;&lt; "Maximum energy storage achievable: " &lt;&lt; result &lt;&lt; " kWh\n";
+
+    return 0;
+}
+        </code>
+        </pre>
+    </section>
 </body>
-
 </html>
+
 
