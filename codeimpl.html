@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Case: Energy Generation Tracking</title>
+    <title>Energy Tracking System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,24 +32,87 @@
 </head>
 <body>
     <header>
-        <h1>Business Case</h1>
-        <h2>Energy Generation Tracking</h2>
+        <h1>Energy Tracking System</h1>
     </header>
     <section>
-        <h3>1. Arrays</h3>
-        <p>Description: Arrays are used to store daily energy generation data for different sources, allowing efficient iteration and tracking.</p>
+        <h2>1. Using Arrays</h2>
+        <p>Description: Arrays are used to store daily energy generation data for different days. This method allows efficient iteration and tracking of energy generation.</p>
         <pre>
 <code>#include &lt;iostream&gt;
-#include &lt;vector&gt;
-
 using namespace std;
 
-int main() {
-    vector&lt;int&gt; energy = {250, 300, 200, 150};
+struct Node {
+    int energy;
+    Node* next;
+};
 
-    cout &lt;&lt; "Daily Energy Generation:\n";
-    for (int i = 0; i < energy.size(); ++i) {
+void trackEnergyUsingArray(int energy[], int days) {
+    int totalEnergy = 0;
+
+    cout &lt;&lt; "\nEnergy Generation Tracking (Array):\n";
+    for (int i = 0; i &lt; days; ++i) {
         cout &lt;&lt; "Day " &lt;&lt; i + 1 &lt;&lt; ": " &lt;&lt; energy[i] &lt;&lt; " kWh\n";
+        totalEnergy += energy[i];
+    }
+
+    cout &lt;&lt; "Total Energy Generated: " &lt;&lt; totalEnergy &lt;&lt; " kWh\n";
+    cout &lt;&lt; "Average Daily Energy: " &lt;&lt; static_cast&lt;double&gt;(totalEnergy) / days &lt;&lt; " kWh\n";
+}
+
+void trackEnergyUsingLinkedList(Node* head) {
+    int totalEnergy = 0, days = 0;
+    Node* current = head;
+
+    cout &lt;&lt; "\nEnergy Generation Tracking (Linked List):\n";
+    while (current != nullptr) {
+        ++days;
+        cout &lt;&lt; "Day " &lt;&lt; days &lt;&lt; ": " &lt;&lt; current-&gt;energy &lt;&lt; " kWh\n";
+        totalEnergy += current-&gt;energy;
+        current = current-&gt;next;
+    }
+
+    cout &lt;&lt; "Total Energy Generated: " &lt;&lt; totalEnergy &lt;&lt; " kWh\n";
+    cout &lt;&lt; "Average Daily Energy: " &lt;&lt; static_cast&lt;double&gt;(totalEnergy) / days &lt;&lt; " kWh\n";
+}
+
+int main() {
+    int days;
+
+    cout &lt;&lt; "Enter the number of days to track energy generation: ";
+    cin &gt;&gt; days;
+
+    int energyArray[days];
+    cout &lt;&lt; "\nEnter energy generation (in kWh) for each day using an array:\n";
+    for (int i = 0; i &lt; days; ++i) {
+        cout &lt;&lt; "Day " &lt;&lt; i + 1 &lt;&lt; ": ";
+        cin &gt;&gt; energyArray[i];
+    }
+
+    Node* head = nullptr;
+    Node* tail = nullptr;
+    cout &lt;&lt; "\nEnter energy generation (in kWh) for each day using a linked list:\n";
+    for (int i = 0; i &lt; days; ++i) {
+        int energy;
+        cout &lt;&lt; "Day " &lt;&lt; i + 1 &lt;&lt; ": ";
+        cin &gt;&gt; energy;
+
+        Node* newNode = new Node{energy, nullptr};
+        if (head == nullptr) {
+            head = newNode; // First node
+            tail = newNode;
+        } else {
+            tail-&gt;next = newNode; // Add to the end
+            tail = newNode;
+        }
+    }
+
+    trackEnergyUsingArray(energyArray, days);
+    trackEnergyUsingLinkedList(head);
+
+    while (head != nullptr) {
+        Node* temp = head;
+        head = head-&gt;next;
+        delete temp;
     }
 
     return 0;
@@ -57,8 +120,8 @@ int main() {
         </code>
         </pre>
 
-        <h3>2. Stacks</h3>
-        <p>Description: Stacks are used to temporarily store energy generation data while processing, especially when reversing or undoing operations is required.</p>
+        <h2>2. Using Stacks</h2>
+        <p>Description: Stacks are used to temporarily store energy generation data and process it in reverse order, using the Last In First Out (LIFO) approach.</p>
         <pre>
 <code>#include &lt;iostream&gt;
 #include &lt;stack&gt;
@@ -67,125 +130,24 @@ using namespace std;
 
 int main() {
     stack&lt;int&gt; energyStack;
+    int numDays, energy;
+
+    // Take input for the number of days
+    cout &lt;&lt; "Enter the number of days: ";
+    cin &gt;&gt; numDays;
 
     // Push daily energy generation data onto the stack
-    energyStack.push(250);
-    energyStack.push(300);
-    energyStack.push(200);
-    energyStack.push(150);
+    for (int i = 0; i &lt; numDays; ++i) {
+        cout &lt;&lt; "Enter energy generation for day " &lt;&lt; i + 1 &lt;&lt; " (in kWh): ";
+        cin &gt;&gt; energy;
+        energyStack.push(energy);
+    }
 
-    cout &lt;&lt; "Processing Energy Data (Reversed Order):\n";
+    cout &lt;&lt; "\nProcessing Energy Data (Reversed Order):\n";
     while (!energyStack.empty()) {
         cout &lt;&lt; "Energy: " &lt;&lt; energyStack.top() &lt;&lt; " kWh\n";
         energyStack.pop(); // Remove processed data
     }
-
-    return 0;
-}
-        </code>
-        </pre>
-
-        <h3>3. Queues</h3>
-        <p>Description: Queues are used to manage energy distribution tasks in a First-In-First-Out (FIFO) order, ensuring sequential processing.</p>
-        <pre>
-<code>#include &lt;iostream&gt;
-#include &lt;queue&gt;
-#include &lt;string&gt;
-
-using namespace std;
-
-int main() {
-    queue&lt;string&gt; energyQueue;
-
-    // Adding energy distribution tasks
-    energyQueue.push("Distribute to Battery A");
-    energyQueue.push("Distribute to Battery B");
-    energyQueue.push("Distribute to Grid");
-
-    cout &lt;&lt; "Energy Distribution Queue:\n";
-    while (!energyQueue.empty()) {
-        cout &lt;&lt; energyQueue.front() &lt;&lt; endl;
-        energyQueue.pop(); // Process the task
-    }
-
-    return 0;
-}
-        </code>
-        </pre>
-
-        <h3>4. Graphs</h3>
-        <p>Description: Graphs represent connections between energy sources (e.g., solar panels, wind turbines) and storage units. Optimizes energy flow using graph traversal techniques.</p>
-        <pre>
-<code>#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;unordered_map&gt;
-#include &lt;queue&gt;
-
-using namespace std;
-
-void bfsEnergyFlow(unordered_map&lt;string, vector&lt;string&gt;&gt; &graph, const string &start) {
-    queue&lt;string&gt; q;
-    unordered_map&lt;string, bool&gt; visited;
-
-    q.push(start);
-    visited[start] = true;
-
-    cout &lt;&lt; "Energy Flow Sequence:\n";
-    while (!q.empty()) {
-        string node = q.front();
-        q.pop();
-        cout &lt;&lt; "Source/Storage Unit: " &lt;&lt; node &lt;&lt; endl;
-
-        for (const string &neighbor : graph[node]) {
-            if (!visited[neighbor]) {
-                visited[neighbor] = true;
-                q.push(neighbor);
-            }
-        }
-    }
-}
-
-int main() {
-    unordered_map&lt;string, vector&lt;string&gt;&gt; graph = {
-        {"SolarPanel", {"Battery1", "Battery2"}},
-        {"Battery1", {"Grid"}},
-        {"Battery2", {"Grid"}},
-        {"Grid", {}}
-    };
-
-    bfsEnergyFlow(graph, "SolarPanel");
-
-    return 0;
-}
-        </code>
-        </pre>
-
-        <h3>5. Dynamic Programming</h3>
-        <p>Description: Dynamic Programming is used to optimize energy usage by determining the maximum energy storage achievable without exceeding storage capacity.</p>
-        <pre>
-<code>#include &lt;iostream&gt;
-#include &lt;vector&gt;
-
-using namespace std;
-
-int maxEnergyStorage(vector&lt;int&gt; &energy, int capacity) {
-    vector&lt;int&gt; dp(capacity + 1, 0);
-
-    for (int e : energy) {
-        for (int j = capacity; j &gt;= e; --j) {
-            dp[j] = max(dp[j], dp[j - e] + e);
-        }
-    }
-
-    return dp[capacity];
-}
-
-int main() {
-    vector&lt;int&gt; energy = {250, 300, 150, 200}; // Energy in kWh
-    int capacity = 500; // Storage capacity in kWh
-
-    int result = maxEnergyStorage(energy, capacity);
-    cout &lt;&lt; "Maximum energy storage achievable: " &lt;&lt; result &lt;&lt; " kWh\n";
 
     return 0;
 }
