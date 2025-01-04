@@ -35,8 +35,11 @@
         <h1>Energy Tracking System</h1>
     </header>
     <section>
-        <h2>1. Using Arrays</h2>
-        <p>Description: Arrays are used to store daily energy generation data for different days. This method allows efficient iteration and tracking of energy generation.</p>
+        <h2>1. Using Arrays and Linked Lists</h2>
+        <p>Description: This section demonstrates how energy generation data can be tracked using both arrays and linked lists. 
+            - **Arrays** are used to store daily energy generation values in a fixed-size structure. 
+            - **Linked Lists** allow for dynamic memory allocation where each node stores energy data for a specific day, and the next node points to the next day's data.
+        Both methods help in calculating the total and average daily energy generation.</p>
         <pre>
 <code>#include &lt;iostream&gt;
 using namespace std;
@@ -121,7 +124,7 @@ int main() {
         </pre>
 
         <h2>2. Using Stacks</h2>
-        <p>Description: Stacks are used to temporarily store energy generation data and process it in reverse order, using the Last In First Out (LIFO) approach.</p>
+        <p>Description: A stack is used to store energy generation data in a Last-In-First-Out (LIFO) manner. This approach processes energy data in reverse order, helping in scenarios where reversing the order of data processing is needed.</p>
         <pre>
 <code>#include &lt;iostream&gt;
 #include &lt;stack&gt;
@@ -156,6 +159,7 @@ int main() {
     </section>
 </body>
 </html>
+
 
 
 
