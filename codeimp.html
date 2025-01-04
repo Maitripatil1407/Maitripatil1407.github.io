@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Cases: Solar Powered Irrigation Scheduling & Energy Generation Tracking</title>
+    <title>Irrigation Algorithms</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,85 +27,18 @@
             background: #f4f4f4;
             padding: 1rem;
             overflow-x: auto;
+            border-left: 3px solid #0078d7;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Business Cases</h1>
-        <h2>1. Solar Powered Irrigation Scheduling</h2>
+        <h1>Irrigation Algorithms</h1>
     </header>
+
     <section>
-        <h3>1. Queues</h3>
-        <p>Description: Queues are used to schedule irrigation tasks in a First-In-First-Out (FIFO) order. Tasks are added to the queue based on priority and processed one by one.</p>
-        <pre>
-<code>#include &lt;iostream&gt;
-#include &lt;queue&gt;
-#include &lt;string&gt;
-
-using namespace std;
-
-int main() {
-    queue&lt;string&gt; irrigationQueue;
-
-    // Adding tasks to the irrigation queue
-    irrigationQueue.push("Irrigate Field A");
-    irrigationQueue.push("Irrigate Field B");
-    irrigationQueue.push("Irrigate Field C");
-
-    cout &lt;&lt; "Irrigation Queue Processing:\n";
-    while (!irrigationQueue.empty()) {
-        cout &lt;&lt; irrigationQueue.front() &lt;&lt; endl; // Process the task at the front
-        irrigationQueue.pop();                  // Remove the processed task
-    }
-
-    return 0;
-}
-        </code>
-        </pre>
-
-        <h3>2. Dynamic Programming</h3>
-        <p>Description: Dynamic Programming optimizes water usage by calculating the minimum water required to meet all crop needs. The goal is to ensure efficient resource allocation.</p>
-        <pre>
-<code>#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;algorithm&gt;
-
-using namespace std;
-
-int minWaterUsage(vector&lt;int&gt; &fields, int totalWater) {
-    vector&lt;int&gt; dp(totalWater + 1, INT_MAX);
-    dp[0] = 0;
-
-    for (int water : fields) {
-        for (int j = totalWater; j &gt;= water; --j) {
-            if (dp[j - water] != INT_MAX) {
-                dp[j] = min(dp[j], dp[j - water] + 1);
-            }
-        }
-    }
-
-    return dp[totalWater] == INT_MAX ? -1 : dp[totalWater];
-}
-
-int main() {
-    vector&lt;int&gt; fields = {3, 5, 7}; // Water required for each crop
-    int totalWater = 11;
-
-    int result = minWaterUsage(fields, totalWater);
-    if (result != -1) {
-        cout &lt;&lt; "Minimum number of fields irrigated: " &lt;&lt; result &lt;&lt; endl;
-    } else {
-        cout &lt;&lt; "Not enough water available.\n";
-    }
-
-    return 0;
-}
-        </code>
-        </pre>
-
-        <h3>3. BFS (Breadth-First Search)</h3>
-        <p>Description: BFS is used to traverse the irrigation pipeline graph to distribute water efficiently.</p>
+        <h2>1. BFS-Based Irrigation Scheduling</h2>
+        <p>Description: This program uses BFS (Breadth-First Search) to distribute water across fields starting from a given field. The program takes input for the number of fields, irrigation paths, and starting field, then processes the irrigation tasks in a BFS manner.</p>
         <pre>
 <code>#include &lt;iostream&gt;
 #include &lt;queue&gt;
@@ -137,24 +70,36 @@ void bfsIrrigation(unordered_map&lt;int, vector&lt;int&gt;&gt; &graph, int start
 }
 
 int main() {
-    unordered_map&lt;int, vector&lt;int&gt;&gt; graph = {
-        {1, {2, 3}},
-        {2, {4, 5}},
-        {3, {6}},
-        {4, {}},
-        {5, {}},
-        {6, {}}
-    };
+    unordered_map&lt;int, vector&lt;int&gt;&gt; graph;
+    int n, e, u, v;
 
-    bfsIrrigation(graph, 1); // Start from Field 1
+    cout &lt;&lt; "Enter the number of fields (nodes): ";
+    cin &gt;&gt; n;
+
+    cout &lt;&lt; "Enter the number of irrigation paths (edges): ";
+    cin &gt;&gt; e;
+
+    cout &lt;&lt; "Enter the irrigation paths (u v): \n";
+    for (int i = 0; i &lt; e; ++i) {
+        cin &gt;&gt; u &gt;&gt; v;
+        graph[u].push_back(v);
+    }
+
+    int start;
+    cout &lt;&lt; "Enter the starting field for irrigation: ";
+    cin &gt;&gt; start;
+
+    bfsIrrigation(graph, start); // Start from the provided field
 
     return 0;
 }
         </code>
         </pre>
+    </section>
 
-        <h3>4. Dijkstra's Algorithm</h3>
-        <p>Description: Dijkstra's algorithm is used to find the shortest pipeline path to a specific area, ensuring efficient water delivery.</p>
+    <section>
+        <h2>2. Dijkstra's Algorithm for Shortest Path</h2>
+        <p>Description: This program uses Dijkstra's algorithm to find the shortest path for irrigation in a graph of fields. It takes input for the number of fields, irrigation paths (with weights), and the starting field to calculate the shortest irrigation path to all other fields.</p>
         <pre>
 <code>#include &lt;iostream&gt;
 #include &lt;vector&gt;
@@ -179,7 +124,7 @@ void dijkstra(vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; &graph, int start
             int nextNode = neighbor.first;
             int edgeWeight = neighbor.second;
 
-            if (distance[node] + edgeWeight < distance[nextNode]) {
+            if (distance[node] + edgeWeight &lt; distance[nextNode]) {
                 distance[nextNode] = distance[node] + edgeWeight;
                 pq.push({distance[nextNode], nextNode});
             }
@@ -187,23 +132,33 @@ void dijkstra(vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; &graph, int start
     }
 
     cout &lt;&lt; "Shortest Path from Field " &lt;&lt; start &lt;&lt; ":\n";
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i &lt; n; ++i) {
         cout &lt;&lt; "To Field " &lt;&lt; i &lt;&lt; ": " &lt;&lt; (distance[i] == INT_MAX ? -1 : distance[i]) &lt;&lt; endl;
     }
 }
 
 int main() {
-    int n = 5; // Number of fields
+    int n, e, u, v, w;
+
+    cout &lt;&lt; "Enter the number of fields (nodes): ";
+    cin &gt;&gt; n;
+
     vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; graph(n);
 
-    // Graph: {to, weight}
-    graph[0] = {{1, 2}, {2, 4}};
-    graph[1] = {{2, 1}, {3, 7}};
-    graph[2] = {{3, 3}};
-    graph[3] = {{4, 1}};
-    graph[4] = {};
+    cout &lt;&lt; "Enter the number of irrigation paths (edges): ";
+    cin &gt;&gt; e;
 
-    dijkstra(graph, 0, n); // Start from Field 0
+    cout &lt;&lt; "Enter the irrigation paths (u v w): \n";
+    for (int i = 0; i &lt; e; ++i) {
+        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+        graph[u].push_back({v, w});
+    }
+
+    int start;
+    cout &lt;&lt; "Enter the starting field for the shortest path calculation: ";
+    cin &gt;&gt; start;
+
+    dijkstra(graph, start, n); // Start from the provided field
 
     return 0;
 }
@@ -211,5 +166,6 @@ int main() {
         </pre>
     </section>
 
-    <section>
-        <header>
+</body>
+</html>
+
