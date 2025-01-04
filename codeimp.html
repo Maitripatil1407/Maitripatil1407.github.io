@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Irrigation Algorithms</title>
+    <title>Solar Power Irrigation Scheduling</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,11 +33,106 @@
 </head>
 <body>
     <header>
-        <h1>Irrigation Algorithms</h1>
+        <h1>Solar Power Irrigation Scheduling</h1>
     </header>
 
     <section>
-        <h2>1. BFS-Based Irrigation Scheduling</h2>
+        <h2>1. Queues for Irrigation Scheduling</h2>
+        <p>Description: This program uses a queue to manage irrigation tasks in a First-In-First-Out (FIFO) manner. It accepts a user input for irrigation tasks and processes them sequentially.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+int main() {
+    queue&lt;string&gt; irrigationQueue;
+    int numTasks;
+
+    // Taking input for the number of tasks
+    cout &lt;&lt; "Enter the number of irrigation tasks: ";
+    cin &gt;&gt; numTasks;
+    cin.ignore(); // To ignore the newline character after entering the number
+
+    // Adding tasks to the irrigation queue
+    for (int i = 0; i &lt; numTasks; ++i) {
+        string task;
+        cout &lt;&lt; "Enter task " &lt;&lt; i + 1 &lt;&lt; ": ";
+        getline(cin, task); // Taking task input
+        irrigationQueue.push(task);
+    }
+
+    cout &lt;&lt; "\nIrrigation Queue Processing:\n";
+    while (!irrigationQueue.empty()) {
+        cout &lt;&lt; irrigationQueue.front() &lt;&lt; endl; // Process the task at the front
+        irrigationQueue.pop();                  // Remove the processed task
+    }
+
+    return 0;
+}
+        </code>
+        </pre>
+    </section>
+
+    <section>
+        <h2>2. Dynamic Programming for Water Usage Optimization</h2>
+        <p>Description: This program uses Dynamic Programming to calculate the maximum amount of water that can be used for irrigation without exceeding the available water supply.</p>
+        <pre>
+<code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;climits&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+// Function to calculate the maximum water usage without exceeding totalWater
+int maxWaterUsage(vector&lt;int&gt;&amp; fields, int totalWater) {
+    vector&lt;int&gt; dp(totalWater + 1, 0); // DP array to store max water usage for each water limit
+
+    // Fill the DP array
+    for (int water : fields) {
+        for (int j = totalWater; j &gt;= water; --j) {
+            dp[j] = max(dp[j], dp[j - water] + water);
+        }
+    }
+
+    // Return the maximum water usage under the constraint
+    return dp[totalWater];
+}
+
+int main() {
+    int numFields, totalWater;
+
+    // Input the number of fields
+    cout &lt;&lt; "Enter the number of fields: ";
+    cin &gt;&gt; numFields;
+
+    // Input water requirements for each field
+    vector&lt;int&gt; fields(numFields);
+    cout &lt;&lt; "Enter the water requirements for each field:\n";
+    for (int i = 0; i &lt; numFields; ++i) {
+        cout &lt;&lt; "Field " &lt;&lt; i + 1 &lt;&lt; ": ";
+        cin &gt;&gt; fields[i];
+    }
+
+    // Input total available water
+    cout &lt;&lt; "Enter the total available water: ";
+    cin &gt;&gt; totalWater;
+
+    // Find the maximum water usage
+    int result = maxWaterUsage(fields, totalWater);
+
+    cout &lt;&lt; "Maximum water that can be used: " &lt;&lt; result &lt;&lt; endl;
+
+    return 0;
+}
+        </code>
+        </pre>
+    </section>
+
+    <section>
+        <h2>3. BFS-Based Irrigation Scheduling</h2>
         <p>Description: This program uses BFS (Breadth-First Search) to distribute water across fields starting from a given field. The program takes input for the number of fields, irrigation paths, and starting field, then processes the irrigation tasks in a BFS manner.</p>
         <pre>
 <code>#include &lt;iostream&gt;
@@ -98,7 +193,7 @@ int main() {
     </section>
 
     <section>
-        <h2>2. Dijkstra's Algorithm for Shortest Path</h2>
+        <h2>4. Dijkstra's Algorithm for Shortest Path</h2>
         <p>Description: This program uses Dijkstra's algorithm to find the shortest path for irrigation in a graph of fields. It takes input for the number of fields, irrigation paths (with weights), and the starting field to calculate the shortest irrigation path to all other fields.</p>
         <pre>
 <code>#include &lt;iostream&gt;
@@ -168,4 +263,5 @@ int main() {
 
 </body>
 </html>
+
 
